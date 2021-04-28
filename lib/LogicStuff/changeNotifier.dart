@@ -5,20 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:translator/translator.dart';
 
 class Data extends ChangeNotifier {
-  GoogleTranslator googleTranslateAPI = GoogleTranslator();
-  //String sms = '';
-  String smsCorrected = '';
-  String input = '';
-  var translatedText;
-  String showTranslatedText = '';
-  List<TextSpan> showColoredText = [];
-  BrainWordCorrector brainCorrector = BrainWordCorrector();
 
   final PageController controllerPage = PageController(initialPage: 0);
-  TextEditingController controllerText1 =
-      TextEditingController(); // pasted text
-  TextEditingController controllerText2 =
-      TextEditingController(); // text corrected and displayed in the lower textField.
+
+  TextEditingController controllerText1 = TextEditingController(); // pasted text
+  TextEditingController controllerText2 =  TextEditingController(); // text corrected and displayed in the lower textField.
+  GoogleTranslator googleTranslateAPI = GoogleTranslator();
+  BrainWordCorrector brainCorrector = BrainWordCorrector();
+  List<TextSpan> showColoredText = [];
+  String showTranslatedText = '';
+  String smsCorrected = '';
+  String input = '';
+
+  var translatedText;
+
 
   void clipboardPasteText() async {
     final value = await FlutterClipboard.paste();
