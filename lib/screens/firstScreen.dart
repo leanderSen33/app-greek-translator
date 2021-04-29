@@ -36,8 +36,8 @@ class FirstScreen extends StatelessWidget {
 
 List<Widget> layoutFirstScreen(boxSide) {
   return [
-    InputLayout(boxSide),
     SizedBox(height: 50.0, width: 60.0),
+    InputLayout(boxSide),
     ColorLayout(boxSide),
   ];
 }

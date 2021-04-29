@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'utils/constants.dart';
 import 'screens/landingScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:greek_to_3/LogicStuff/changeNotifier.dart';
+import 'package:greek_to_3/logic/changeNotifierExtender.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();

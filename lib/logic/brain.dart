@@ -2,16 +2,19 @@ import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'package:flutter/material.dart';
+import 'package:greek_to_3/data/latinList.dart';
+import 'dart:io';
 
-class BrainWordCorrector {
+class Brain {
   // Load the ExceptionsList from tbe Asset folder.
-  Future<String> _loadAsset() async {
-    return await rootBundle.loadString('assets/ListInLatinWithoutBrackets.txt');
-  }
 
+  bool isLowerCase = true;
   RegExp _separator = RegExp(r"[();:., !'-]");
   RegExp _separatorWithSlash = RegExp(r"[();:., !'-/]");
   RegExp _isLatin = RegExp(r"[A-Za-z]+");
+  List<TextSpan> _finalColorList = [];
+  List<TextSpan> getFinalList() => _finalColorList;
+  LatinList latinList = LatinList();
 
   Map _mismatchedLetters = {
     'E': 'ε',
@@ -75,30 +78,19 @@ class BrainWordCorrector {
   String exoyn = 'EXOYN';
   String etaipeia = 'ETAIPEIA';
 
-  bool _isGreek(String word) {
-    List<String> wordSplit = word.split('');
-
-    for (var letters in wordSplit) {
-      bool isGreek = _greekAlphabet.contains(letters);
-
-      if (isGreek == true) {
-        return true;
-      }
-    }
-    return false;
+  String corrector(String msg) {
+    msg = firstRepace(msg);
+    msg = secondRepace(msg);
+    print(msg);
+    return msg;
   }
 
-  Future<String> wordCorrector(String message) async {
-    List wordsList = message.split(_separator);
-    for (var word in wordsList) {
-      if (wordsList.contains('A/A')) {
-        String finalWord = word;
-        finalWord = finalWord.replaceAll('A/A', 'Αυξων Αριθμός');
-        message = message.replaceFirst(word, finalWord);
-      }
-    }
-    List wordsList2 = message.split(_separatorWithSlash);
-    for (var word in wordsList2) {
+  String secondRepace(String message) {
+
+    List<String> exceptionList = latinList.getList();
+    List msgList = message.split(_separatorWithSlash);
+
+    for (var word in msgList) {
       if (_isGreek(word)) {
         var minutesAbbreviation = RegExp(r'^[0-9]+Λ$').hasMatch(word);
         if (minutesAbbreviation) {
@@ -116,9 +108,8 @@ class BrainWordCorrector {
         }
         message = message.replaceFirst(word, finalWord);
       } else {
-        var exceptionsListII = await _loadAsset();
-        List<String> exceptionListSplitII = exceptionsListII.split(", ");
-        if (exceptionListSplitII.contains(word) ||
+
+        if (exceptionList.contains(word) ||
             word == e ||
             word == l ||
             word == ap ||
@@ -144,9 +135,7 @@ class BrainWordCorrector {
         if (_greekAbbreviationsMap.containsKey(word) && word != 'E') {
           message = message.replaceFirst(word, _greekAbbreviationsMap[word]);
         }
-        var exceptionsList = await _loadAsset();
-        List<String> exceptionListSplit = exceptionsList.split(", ");
-        if (exceptionListSplit.contains(word) && word != 'A/A') {
+        if (exceptionList.contains(word) && word != 'A/A') {
           String finalWord = word;
           for (var letter in _mismatchedLetters.keys) {
             finalWord =
@@ -157,16 +146,22 @@ class BrainWordCorrector {
         }
       }
     }
-
-    return message.toLowerCase();
+    message = message.toLowerCase();
+    return message;
   }
 
-  List<TextSpan> _finalColorList = [];
-  List<TextSpan> getFinalList() => _finalColorList;
 
-  void _addNonGreekWord(String word) async {
-    word = word + ' ';
-    _addNormalLetter(word);
+  bool _isGreek(String word) {
+    List<String> wordSplit = word.split('');
+
+    for (var letters in wordSplit) {
+      bool isGreek = _greekAlphabet.contains(letters);
+
+      if (isGreek == true) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void _addGreekWord(String word) {
@@ -180,8 +175,6 @@ class BrainWordCorrector {
       }
     }
   }
-
-  bool isLowerCase = true;
 
   List<TextSpan> addColoredLetter(String letter) {
     _finalColorList.add(
@@ -198,4 +191,22 @@ class BrainWordCorrector {
     );
     return _finalColorList;
   }
+
+  void _addNonGreekWord(String word) async {
+    word = word + ' ';
+    _addNormalLetter(word);
+  }
+
+  String firstRepace(String message){
+    List wordsList = message.split(_separator);
+    for (var word in wordsList) {
+      if (wordsList.contains('A/A')) {
+        String finalWord = word;
+        finalWord = finalWord.replaceAll('A/A', 'Αυξων Αριθμός');
+        message = message.replaceFirst(word, finalWord);
+      }
+    }
+    return message;
+  }
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/LogicStuff/brainCorrector.dart';
+import 'package:greek_to_3/logic/brainCorrector.dart';
+import 'package:greek_to_3/logic/brain.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:translator/translator.dart';
@@ -12,10 +13,12 @@ class Data extends ChangeNotifier {
   TextEditingController controllerText2 =  TextEditingController(); // text corrected and displayed in the lower textField.
   GoogleTranslator googleTranslateAPI = GoogleTranslator();
   BrainWordCorrector brainCorrector = BrainWordCorrector();
+  Brain brain = Brain();
   List<TextSpan> showColoredText = [];
   String showTranslatedText = '';
   String smsCorrected = '';
   String input = '';
+  bool switchText = false;
 
   var translatedText;
 
@@ -32,14 +35,12 @@ class Data extends ChangeNotifier {
   }
 
   void visualizeButton() async {
-    print('Controller 1 Pre: ${controllerText1.text}');
-    smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
+    // print('Controller 1 Pre: ${controllerText1.text}');
+    smsCorrected = brain.corrector(controllerText1.text);
     showColoredText = brainCorrector.getFinalList(); // TEST
     // controllerText1.text = '';
     notifyListeners();
   }
-
-  bool switchText = false;
 
   void switchCaseButton() async {
     switchText = !switchText;
@@ -48,11 +49,15 @@ class Data extends ChangeNotifier {
     // switchText
     //     ? showColoredText = []
     //     : showColoredText = brainCorrector.getFinalList();
-    switchText
-        ? brainCorrector.isLowerCase = false
-        : brainCorrector.isLowerCase = true;
-    showColoredText = [];
-    showColoredText = brainCorrector.getFinalList();
+    if(switchText){
+      brainCorrector.isLowerCase = true;
+      showColoredText = [];
+    }
+    else {
+      brainCorrector.isLowerCase = false;
+      showColoredText = brainCorrector.getFinalList();
+    }
+    // showColoredText = brainCorrector.getFinalList();
     notifyListeners();
   }
 
@@ -65,7 +70,7 @@ class Data extends ChangeNotifier {
   void fixButton() async {
     //smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
     controllerText2.text = smsCorrected;
-    print('FIXED MESSAGE: ${controllerText2.text}');
+    // print('FIXED MESSAGE: ${controllerText2.text}');
     input = smsCorrected;
     controllerPage.jumpToPage(1);
     notifyListeners();
@@ -75,9 +80,8 @@ class Data extends ChangeNotifier {
     await googleTranslateAPI
         .translate(input, from: 'el', to: 'en')
         .then((value) => translatedText = value);
-    print('Traducido: $translatedText');
+    // print('Traducido: $translatedText');
     showTranslatedText = translatedText.text;
-
     notifyListeners();
   }
 
