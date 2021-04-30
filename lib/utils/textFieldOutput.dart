@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:greek_to_3/utils/constants.dart';
-import 'package:greek_to_3/LogicStuff/changeNotifier.dart';
+import 'package:greek_to_3/logic/changeNotifier.dart';
 import 'package:provider/provider.dart';
 
 class TextFieldOutput extends StatelessWidget {

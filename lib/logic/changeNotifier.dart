@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/LogicStuff/brainCorrector.dart';
+import 'package:greek_to_3/logic/brainCorrector.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:translator/translator.dart';
