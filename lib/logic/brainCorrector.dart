@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:greek_to_3/logic/brain.dart';
 import 'package:greek_to_3/data/latinList.dart';
@@ -20,9 +21,8 @@ class BrainWordCorrector {
   String exoyn = 'EXOYN';
   String etaipeia = 'ETAIPEIA';
 
-  // Future<String> wordCorrector(String message) async => brain.corrector(message);
-  Future<String> wordCorrector(String message) async => wordCorrectorWrapper(message);
-  String wordCorrectorWrapper(String message) {
+
+  String wordCorrector(String message) {
 
     Map _mismatchedLetters = vars.getMismatchedLetters();
     Map _greekAbbreviationsMap = vars.getGreekAbbreviationsMap();
@@ -55,6 +55,8 @@ class BrainWordCorrector {
         message = message.replaceFirst(word, finalWord);
       } else {
         List<String> exceptionListSplitII = latinList.getList();
+        // var exceptionsListII = await _loadAsset();
+        // List<String> exceptionListSplitII = exceptionsListII.split(", ");
         if (exceptionListSplitII.contains(word) ||
             word == e ||
             word == l ||
@@ -82,6 +84,8 @@ class BrainWordCorrector {
           message = message.replaceFirst(word, _greekAbbreviationsMap[word]);
         }
         List<String> exceptionListSplit = latinList.getList();
+        // var exceptionsList = await _loadAsset();
+        // List<String> exceptionListSplit = exceptionsList.split(", ");
         if (exceptionListSplit.contains(word) && word != 'A/A') {
           String finalWord = word;
           for (var letter in _mismatchedLetters.keys) {
