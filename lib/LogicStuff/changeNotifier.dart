@@ -34,7 +34,7 @@ class Data extends ChangeNotifier {
   void visualizeButton() async {
     print('Controller 1 Pre: ${controllerText1.text}');
     smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
-    showColoredText = brainCorrector.getFinalList(); // TEST
+    showColoredText = brainCorrector.finalList; // Come back after deleting
     // controllerText1.text = '';
     notifyListeners();
   }
@@ -42,17 +42,20 @@ class Data extends ChangeNotifier {
   bool switchText = false;
 
   void switchCaseButton() async {
-    switchText = !switchText;
-    //brainCorrector.isLowerCase = false;
-    //smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
-    // switchText
-    //     ? showColoredText = []
-    //     : showColoredText = brainCorrector.getFinalList();
+    //switchText = !switchText;
+    // brainCorrector.isLowerCase = false;
+    // showColoredText = [];
+    smsCorrected = " ";
+    brainCorrector.isLowerCase = false;
+    smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
     switchText
-        ? brainCorrector.isLowerCase = false
-        : brainCorrector.isLowerCase = true;
-    showColoredText = [];
-    showColoredText = brainCorrector.getFinalList();
+        ? showColoredText = []
+        : showColoredText = brainCorrector.finalList;
+
+    // switchText
+    //     ? showColoredText = brainCorrector.getFinalList()
+    //     : brainCorrector.isLowerCase = true;
+
     notifyListeners();
   }
 
@@ -77,7 +80,6 @@ class Data extends ChangeNotifier {
         .then((value) => translatedText = value);
     print('Traducido: $translatedText');
     showTranslatedText = translatedText.text;
-
     notifyListeners();
   }
 

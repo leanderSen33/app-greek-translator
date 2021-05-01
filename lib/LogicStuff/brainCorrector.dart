@@ -162,7 +162,7 @@ class BrainWordCorrector {
   }
 
   List<TextSpan> _finalColorList = [];
-  List<TextSpan> getFinalList() => _finalColorList;
+  List<TextSpan> get finalList => _finalColorList;
 
   void _addNonGreekWord(String word) async {
     word = word + ' ';
