@@ -4,7 +4,7 @@ import 'package:greek_to_3/utils/constants.dart';
 import 'package:greek_to_3/utils/buttons.dart';
 import 'package:greek_to_3/utils/textFieldOutput.dart';
 import 'package:provider/provider.dart';
-import 'package:greek_to_3/LogicStuff/changeNotifier.dart';
+import 'package:greek_to_3/logic/changeNotifier.dart';
 
 class OutputLayout extends StatelessWidget {
   final double boxSide;
