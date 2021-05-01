@@ -1,73 +1,17 @@
 import 'dart:async';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
-
+import 'package:greek_to_3/data/latinList.dart';
+import 'package:greek_to_3/data/brainVars.dart';
 class BrainWordCorrector {
-  // Load the ExceptionsList from tbe Asset folder.
-  Future<String> _loadAsset() async {
-    return await rootBundle.loadString('assets/ListInLatinWithoutBrackets.txt');
-  }
 
+  LatinList latinList = LatinList();
+  Vars vars = Vars();
+  bool isLowerCase = true;
   RegExp _separator = RegExp(r"[();:., !'-]");
   RegExp _separatorWithSlash = RegExp(r"[();:., !'-/]");
   RegExp _isLatin = RegExp(r"[A-Za-z]+");
-
-  Map _mismatchedLetters = {
-    'E': 'ε',
-    'K': 'κ',
-    'P': 'ρ',
-    'A': 'α',
-    'B': 'β',
-    'T': 'τ',
-    'Y': 'υ',
-    'I': 'ι',
-    'O': 'ο',
-    'H': 'η',
-    'Z': 'ζ',
-    'X': 'χ',
-    'N': 'ν',
-    'M': 'μ',
-  };
-
-  List _greekAlphabet = [
-    'Ε',
-    'Ρ',
-    'Τ',
-    'Υ',
-    'Θ',
-    'Ι',
-    'Ο',
-    'Π',
-    'Α',
-    'Σ',
-    'Δ',
-    'Φ',
-    'Γ',
-    'Η',
-    'Ξ',
-    'Κ',
-    'Λ',
-    'Ζ',
-    'Χ',
-    'Ψ',
-    'Ω',
-    'Ω',
-    'Β',
-    'Ν',
-    'Μ'
-  ];
-
-  Map _greekAbbreviationsMap = {
-    'E': ' ευρώ',
-    'Λ': ' λεπτά',
-    'AP': 'Αριθμός',
-    'KAPTA': 'κάρτα',
-    'EXOYN': 'έχουν',
-    'ETAIPEIA': 'εταιρεία',
-    // 'MEΛOΣ': 'μέλος', // add a different group for greek words.
-  };
-
   String e = 'E';
   String l = 'Λ';
   String ap = 'AP';
@@ -75,20 +19,12 @@ class BrainWordCorrector {
   String exoyn = 'EXOYN';
   String etaipeia = 'ETAIPEIA';
 
-  bool _isGreek(String word) {
-    List<String> wordSplit = word.split('');
 
-    for (var letters in wordSplit) {
-      bool isGreek = _greekAlphabet.contains(letters);
+  String wordCorrector(String message) {
 
-      if (isGreek == true) {
-        return true;
-      }
-    }
-    return false;
-  }
+    Map _mismatchedLetters = vars.getMismatchedLetters();
+    Map _greekAbbreviationsMap = vars.getGreekAbbreviationsMap();
 
-  Future<String> wordCorrector(String message) async {
     List wordsList = message.split(_separator);
     for (var word in wordsList) {
       if (wordsList.contains('A/A')) {
@@ -116,8 +52,7 @@ class BrainWordCorrector {
         }
         message = message.replaceFirst(word, finalWord);
       } else {
-        var exceptionsListII = await _loadAsset();
-        List<String> exceptionListSplitII = exceptionsListII.split(", ");
+        List<String> exceptionListSplitII = latinList.getList();
         if (exceptionListSplitII.contains(word) ||
             word == e ||
             word == l ||
@@ -144,21 +79,30 @@ class BrainWordCorrector {
         if (_greekAbbreviationsMap.containsKey(word) && word != 'E') {
           message = message.replaceFirst(word, _greekAbbreviationsMap[word]);
         }
-        var exceptionsList = await _loadAsset();
-        List<String> exceptionListSplit = exceptionsList.split(", ");
+        List<String> exceptionListSplit = latinList.getList();
         if (exceptionListSplit.contains(word) && word != 'A/A') {
           String finalWord = word;
           for (var letter in _mismatchedLetters.keys) {
             finalWord =
                 finalWord.replaceAll(letter, _mismatchedLetters[letter]);
           }
-
           message = message.replaceFirst(word, finalWord);
         }
       }
     }
-
     return message.toLowerCase();
+  }
+
+  bool _isGreek(String word) {
+    List _greekAlphabet = vars.getGreekAlphabet();
+    List<String> wordSplit = word.split('');
+    for (var letters in wordSplit) {
+      bool isGreek = _greekAlphabet.contains(letters);
+      if (isGreek == true) {
+        return true;
+      }
+    }
+    return false;
   }
 
   List<TextSpan> _finalColorList = [];
@@ -180,8 +124,6 @@ class BrainWordCorrector {
       }
     }
   }
-
-  bool isLowerCase = true;
 
   List<TextSpan> addColoredLetter(String letter) {
     _finalColorList.add(

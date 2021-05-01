@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/LogicStuff/brainCorrector.dart';
+import 'package:greek_to_3/logic/brainCorrector.dart';
 import 'package:greek_to_3/utils/buttons.dart';
-import 'package:greek_to_3/LogicStuff/changeNotifier.dart';
+import 'package:greek_to_3/logic/changeNotifier.dart';
 import 'package:provider/provider.dart';
 
 class ColorLayout extends StatelessWidget {

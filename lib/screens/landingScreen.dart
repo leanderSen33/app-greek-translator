@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:greek_to_3/screens/firstScreen.dart';
 import 'package:greek_to_3/screens/secondScreen.dart';
-import 'package:greek_to_3/LogicStuff/changeNotifier.dart';
+import 'package:greek_to_3/logic/changeNotifier.dart';
 import 'package:provider/provider.dart';
 
 class LandingScreen extends StatelessWidget {
