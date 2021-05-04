@@ -41,7 +41,7 @@ class ColorLayout extends StatelessWidget {
               child: RichText(
                 text: TextSpan(
                   children:
-                      Provider.of<Data>(context, listen: false).showColoredText,
+                      Provider.of<Data>(context, listen: true).showColorText,
                 ),
               ), // Text(
               // Provider.of<Data>(context).showTranslatedText,

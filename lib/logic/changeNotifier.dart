@@ -4,7 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:translator/translator.dart';
 
-class Data extends ChangeNotifier {
+class Data with ChangeNotifier {
   GoogleTranslator googleTranslateAPI = GoogleTranslator();
   //String sms = '';
   String smsCorrected = '';
@@ -12,7 +12,9 @@ class Data extends ChangeNotifier {
   var translatedText;
   String showTranslatedText = '';
   List<TextSpan> showColoredText = [];
-  BrainWordCorrector brainCorrector = BrainWordCorrector();
+  List<TextSpan> get showColorText => showColoredText;
+
+  var brainCorrector = BrainWordCorrector();
 
   final PageController controllerPage = PageController(initialPage: 0);
   TextEditingController controllerText1 =
@@ -31,38 +33,25 @@ class Data extends ChangeNotifier {
     notifyListeners();
   }
 
-  void visualizeButton() async {
+  void visualizeButton() {
     print('Controller 1 Pre: ${controllerText1.text}');
-    smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
-    showColoredText = brainCorrector.finalList; // Come back after deleting
+    smsCorrected = brainCorrector.wordCorrector(controllerText1.text);
+    showColoredText = brainCorrector.finalList;
     // controllerText1.text = '';
     notifyListeners();
   }
 
-  bool switchText = false;
+  bool switchText = true;
 
   void switchCaseButton() async {
     //switchText = !switchText;
     // brainCorrector.isLowerCase = false;
-    // showColoredText = [];
-    smsCorrected = " ";
-    brainCorrector.isLowerCase = false;
-    smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
-    switchText
-        ? showColoredText = []
-        : showColoredText = brainCorrector.finalList;
+    showColoredText = [];
 
-    // switchText
-    //     ? showColoredText = brainCorrector.getFinalList()
-    //     : brainCorrector.isLowerCase = true;
+    brainCorrector.isLowerCase = false;
+    showColoredText = brainCorrector.finalList;
 
     notifyListeners();
-  }
-
-  void clipboardCopyText() async {
-    await FlutterClipboard.copy(controllerText2.text);
-    // Scaffold.of(contextOutputField)
-    //     .showSnackBar(SnackBar(content: Text('√ Copied to Clipboard')));
   }
 
   void fixButton() async {
@@ -72,6 +61,12 @@ class Data extends ChangeNotifier {
     input = smsCorrected;
     controllerPage.jumpToPage(1);
     notifyListeners();
+  }
+
+  void clipboardCopyText() async {
+    await FlutterClipboard.copy(controllerText2.text);
+    // Scaffold.of(contextOutputField)
+    //     .showSnackBar(SnackBar(content: Text('√ Copied to Clipboard')));
   }
 
   void translateButton() async {
@@ -93,6 +88,7 @@ class Data extends ChangeNotifier {
     controllerText2.clear();
     showTranslatedText = '';
     showColoredText = [];
+    showColoredText.clear();
     notifyListeners();
   }
 
