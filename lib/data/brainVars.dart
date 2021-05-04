@@ -1,4 +1,4 @@
-class Vars{
+class Vars {
   Map _mismatchedLetters = {
     'E': 'ε',
     'K': 'κ',
@@ -54,7 +54,7 @@ class Vars{
     // 'MEΛOΣ': 'μέλος', // add a different group for greek words.
   };
 
-  Map getMismatchedLetters(){ return _mismatchedLetters; }
-  List getGreekAlphabet(){ return _greekAlphabet; }
-  Map getGreekAbbreviationsMap(){ return _greekAbbreviationsMap; }
+  Map getMismatchedLetters() => _mismatchedLetters;
+  List getGreekAlphabet() => _greekAlphabet;
+  Map getGreekAbbreviationsMap() => _greekAbbreviationsMap;
 }

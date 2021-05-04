@@ -4,8 +4,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:greek_to_3/data/latinList.dart';
 import 'package:greek_to_3/data/brainVars.dart';
-class BrainWordCorrector {
 
+class BrainWordCorrector {
   LatinList latinList = LatinList();
   Vars vars = Vars();
   bool isLowerCase = true;
@@ -19,9 +19,8 @@ class BrainWordCorrector {
   String exoyn = 'EXOYN';
   String etaipeia = 'ETAIPEIA';
 
-
   String wordCorrector(String message) {
-
+    _finalColorList = [];
     Map _mismatchedLetters = vars.getMismatchedLetters();
     Map _greekAbbreviationsMap = vars.getGreekAbbreviationsMap();
 
@@ -106,7 +105,7 @@ class BrainWordCorrector {
   }
 
   List<TextSpan> _finalColorList = [];
-  List<TextSpan> getFinalList() => _finalColorList;
+  List<TextSpan> get finalList => _finalColorList;
 
   void _addNonGreekWord(String word) async {
     word = word + ' ';
