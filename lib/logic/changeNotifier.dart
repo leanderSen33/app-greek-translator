@@ -11,7 +11,9 @@ class Data with ChangeNotifier {
   String input = '';
   var translatedText;
   String showTranslatedText = '';
+
   List<TextSpan> showColoredText = [];
+
   List<TextSpan> get showColorText => showColoredText;
 
   var brainCorrector = BrainWordCorrector();
@@ -43,15 +45,17 @@ class Data with ChangeNotifier {
 
   bool switchText = true;
 
-  void switchCaseButton() async {
-    //switchText = !switchText;
-    // brainCorrector.isLowerCase = false;
-    showColoredText = [];
+  void switchCaseButton() {
+    switchText = !switchText;
 
-    brainCorrector.isLowerCase = false;
-    showColoredText = brainCorrector.finalList;
-
+    switchText ? changeLetterCase(switchText) : changeLetterCase(switchText);
     notifyListeners();
+  }
+
+  void changeLetterCase(bool status) {
+    brainCorrector.isLowerCase = switchText;
+    brainCorrector.wordCorrector(controllerText1.text);
+    showColoredText = brainCorrector.finalList;
   }
 
   void fixButton() async {
