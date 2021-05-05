@@ -43,7 +43,7 @@ class Data with ChangeNotifier {
     notifyListeners();
   }
 
-  bool switchText = true;
+  bool switchText = false;
 
   void switchCaseButton() {
     switchText = !switchText;

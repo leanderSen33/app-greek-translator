@@ -8,7 +8,7 @@ import 'package:greek_to_3/data/brainVars.dart';
 class BrainWordCorrector {
   LatinList latinList = LatinList();
   Vars vars = Vars();
-  bool isLowerCase = true;
+  bool isLowerCase = false;
   RegExp _separator = RegExp(r"[();:., !'-]");
   RegExp _separatorWithSlash = RegExp(r"[();:., !'-/]");
   RegExp _isLatin = RegExp(r"[A-Za-z]+");
