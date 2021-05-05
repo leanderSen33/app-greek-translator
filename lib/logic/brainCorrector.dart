@@ -1,9 +1,9 @@
-import 'dart:async';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:greek_to_3/data/latinList.dart';
 import 'package:greek_to_3/data/brainVars.dart';
+// import 'dart:async';
+// import 'dart:async' show Future;
+// import 'package:flutter/services.dart' show rootBundle;
 
 class BrainWordCorrector {
   LatinList latinList = LatinList();

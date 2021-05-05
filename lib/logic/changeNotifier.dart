@@ -6,23 +6,21 @@ import 'package:translator/translator.dart';
 
 class Data with ChangeNotifier {
   GoogleTranslator googleTranslateAPI = GoogleTranslator();
-  //String sms = '';
   String smsCorrected = '';
   String input = '';
-  var translatedText;
   String showTranslatedText = '';
-
   List<TextSpan> showColoredText = [];
-
   List<TextSpan> get showColorText => showColoredText;
+  bool switchText = false;
 
   var brainCorrector = BrainWordCorrector();
-
   final PageController controllerPage = PageController(initialPage: 0);
-  TextEditingController controllerText1 =
-      TextEditingController(); // pasted text
-  TextEditingController controllerText2 =
-      TextEditingController(); // text corrected and displayed in the lower textField.
+
+  // pasted text
+  TextEditingController controllerText1 = TextEditingController();
+
+  // text corrected and displayed in the lower textField.
+  TextEditingController controllerText2 = TextEditingController();
 
   void clipboardPasteText() async {
     final value = await FlutterClipboard.paste();
@@ -39,15 +37,11 @@ class Data with ChangeNotifier {
     print('Controller 1 Pre: ${controllerText1.text}');
     smsCorrected = brainCorrector.wordCorrector(controllerText1.text);
     showColoredText = brainCorrector.finalList;
-    // controllerText1.text = '';
     notifyListeners();
   }
 
-  bool switchText = false;
-
   void switchCaseButton() {
     switchText = !switchText;
-
     switchText ? changeLetterCase(switchText) : changeLetterCase(switchText);
     notifyListeners();
   }
@@ -59,7 +53,6 @@ class Data with ChangeNotifier {
   }
 
   void fixButton() async {
-    //smsCorrected = await brainCorrector.wordCorrector(controllerText1.text);
     controllerText2.text = smsCorrected;
     print('FIXED MESSAGE: ${controllerText2.text}');
     input = smsCorrected;
@@ -74,10 +67,11 @@ class Data with ChangeNotifier {
   }
 
   void translateButton() async {
+    var translatedText;
     await googleTranslateAPI
         .translate(input, from: 'el', to: 'en')
         .then((value) => translatedText = value);
-    print('Traducido: $translatedText');
+    print('Translation: $translatedText');
     showTranslatedText = translatedText.text;
     notifyListeners();
   }
@@ -85,7 +79,6 @@ class Data with ChangeNotifier {
   void refreshButton() {
     smsCorrected = '';
     controllerPage.jumpToPage(0);
-    //clearFields();
     controllerText1.text = '';
     controllerText2.text = '';
     controllerText1.clear();
