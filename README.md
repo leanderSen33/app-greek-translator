@@ -1,4 +1,4 @@
-# greek_to_3
+# greek_fix
 
 A new Flutter application.
 
@@ -14,18 +14,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-## Set unit test in android studio
-1. Open 'Editor Run/Debug configuration'
-2. Edit configuration
-3. Add new configuration
-4. Select Flutter test
-5. Name: Tests brainCorrectorTest.dart (as example)
-6. Test scope: All in file 
-7. Test file: /Users/enriqueramosmunoz/github/appGreekTranslator/test/brainCorrectorTest.dart
-8. Apply
-9. Select Flutter main.dart
-10. Before lunch: select the flutter test create before 
-11. Apply
-
-Once this is done Android studio will run the test before lunch the app locally

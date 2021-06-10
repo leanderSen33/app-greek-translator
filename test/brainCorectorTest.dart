@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:greek_to_3/logic/brainCorrector.dart';
-import 'package:greek_to_3/data/testSet.dart';
+import 'package:greekfix/logic/brainCorrector.dart';
+import 'package:greekfix/data/testSet.dart';
 import 'package:test/test.dart';
 
 void main() {
