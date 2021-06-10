@@ -1,14 +1,11 @@
-import 'dart:async';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/data/latinList.dart';
-import 'package:greek_to_3/data/brainVars.dart';
+import 'package:greekfix/data/latinList.dart';
+import 'package:greekfix/data/brainVars.dart';
 
 class BrainWordCorrector {
   LatinList latinList = LatinList();
   Vars vars = Vars();
-  bool isLowerCase = true;
+  bool isLowerCase = false;
   RegExp _separator = RegExp(r"[();:., !'-]");
   RegExp _separatorWithSlash = RegExp(r"[();:., !'-/]");
   RegExp _isLatin = RegExp(r"[A-Za-z]+");
@@ -128,14 +125,15 @@ class BrainWordCorrector {
     _finalColorList.add(
       TextSpan(
           text: isLowerCase ? letter.toLowerCase() : letter, // toLowerCase() ?
-          style: TextStyle(color: Colors.pinkAccent)),
+          style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 17)),
     );
     return _finalColorList;
   }
 
   List<TextSpan> _addNormalLetter(String letter) {
     _finalColorList.add(
-      TextSpan(text: letter),
+      TextSpan(
+          text: letter, style: TextStyle(color: Colors.white, fontSize: 17)),
     );
     return _finalColorList;
   }

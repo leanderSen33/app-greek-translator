@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'utils/constants.dart';
-import 'screens/landingScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:greek_to_3/logic/changeNotifier.dart';
+import 'package:greekfix/logic/changeNotifier.dart';
+import 'package:greekfix/screens/landingScreen.dart';
+import 'package:greekfix/utils/size_config.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -20,16 +21,25 @@ class MyApp extends StatelessWidget {
       create: (context) {
         return Data();
       },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'EL Translator',
-        theme: ThemeData(
-            primaryColor: kColorWhite,
-            accentColor: kDarkBlue,
-            scaffoldBackgroundColor:
-                Colors.grey[900], // ==> body color for the scaffold
-            fontFamily: "Montserrat"),
-        home: LandingScreen(),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return OrientationBuilder(
+            builder: (context, orientation) {
+              SizeConfig().init(constraints, orientation);
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: LandingScreen(),
+                title: 'GreekFix',
+                theme: ThemeData(
+                    primaryColor: kColorWhite,
+                    accentColor: kDarkBlue,
+                    scaffoldBackgroundColor:
+                        Color(0XFFD4D7D9), // ==> body color for the scaffold
+                    fontFamily: "Montserrat"),
+              );
+            },
+          );
+        },
       ),
     );
   }

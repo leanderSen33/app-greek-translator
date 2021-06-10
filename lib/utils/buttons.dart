@@ -1,43 +1,84 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:greek_to_3/logic/changeNotifier.dart';
+import 'package:greekfix/logic/changeNotifier.dart';
 import 'package:provider/provider.dart';
 
 class ButtonVisualizeColors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         Provider.of<Data>(context, listen: false).visualizeButton();
       },
-      elevation: 2.0,
-      fillColor: Colors.grey[600],
-      child: Icon(
-        CupertinoIcons.search,
-        color: Colors.grey[100],
-        size: 35.0,
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).visualizeButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).visualizeIconStatus}.png',
+          ),
+        ),
       ),
-      padding: EdgeInsets.all(17.0),
-      shape: CircleBorder(),
     );
   }
 }
 
-class ButtonTranslate extends StatelessWidget {
+class ButtonPaste extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: Provider.of<Data>(context, listen: false).translateButton,
-      elevation: 2.0,
-      fillColor: Colors.grey[600],
-      child: Icon(
-        Icons.translate,
-        color: Colors.grey[100],
-        size: 35.0,
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).clipboardPasteText();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).pasteButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).pasteIconStatus}.png',
+          ),
+        ),
       ),
-      padding: EdgeInsets.all(17.0),
-      shape: CircleBorder(),
+    );
+  }
+}
+
+class ButtonDelete extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).clipboardDeleteText();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).deleteButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).deleteIconStatus}.png',
+          ),
+        ),
+      ),
     );
   }
 }
@@ -45,35 +86,25 @@ class ButtonTranslate extends StatelessWidget {
 class ButtonFixText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: Provider.of<Data>(context, listen: false).fixButton,
-      elevation: 2.0,
-      fillColor: Colors.grey[600],
-      child: Icon(
-        Icons.auto_fix_high,
-        color: Colors.grey[100],
-        size: 35.0,
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).fixButton();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).fixButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(7.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).fixIconStatus}.png',
+          ),
+        ),
       ),
-      padding: EdgeInsets.all(17.0),
-      shape: CircleBorder(),
-    );
-  }
-}
-
-class ButtonRefresh extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: Provider.of<Data>(context, listen: false).refreshButton,
-      elevation: 2.0,
-      fillColor: Colors.grey[600],
-      child: Icon(
-        Icons.refresh,
-        color: Colors.grey[100],
-        size: 35.0,
-      ),
-      padding: EdgeInsets.all(17.0),
-      shape: CircleBorder(),
     );
   }
 }
@@ -81,19 +112,114 @@ class ButtonRefresh extends StatelessWidget {
 class ButtonSwitchCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: Provider.of<Data>(context, listen: false).switchCaseButton,
-      elevation: 2.0,
-      fillColor: Colors.grey[600],
-      constraints: BoxConstraints.loose(Size(90, 90)),
-      child: Icon(
-        Icons.text_fields_sharp,
-        color: Colors.grey[100],
-        size: 30.0,
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).switchCaseButton();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).switchCaseButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).switchCaseIconStatus}.png',
+          ),
+        ),
       ),
-      padding: EdgeInsets.all(7.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+    );
+  }
+}
+
+class ButtonCopy extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).clipboardCopyText();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Text copied to clipboard'),
+            width: 280.0, // Width of the SnackBar.
+            padding: const EdgeInsets.symmetric(
+              horizontal: 60.0, // Inner padding for SnackBar content.
+            ),
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 1),
+          ),
+        );
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).copyButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).copyIconStatus}.png',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonTranslate extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).translateButton();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).translateButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).translateIconStatus}.png',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonRefresh extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Provider.of<Data>(context, listen: false).refreshButton();
+      },
+      child: ClayContainer(
+        color: Color(0XFFD4D7D9),
+        borderRadius: 17,
+        height: 50,
+        width: 50,
+        depth: 35,
+        spread: 3,
+        emboss: Provider.of<Data>(context, listen: false).returnButtonOn,
+        child: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Image.asset(
+            'assets/Images/${Provider.of<Data>(context, listen: false).returnIconStatus}.png',
+          ),
+        ),
       ),
     );
   }

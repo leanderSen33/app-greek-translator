@@ -14,7 +14,7 @@ const BoxDecoration kFieldDecoration2 = BoxDecoration(
   ),
 );
 
-const kTextStyleFields = TextStyle(fontSize: 17.0, color: Color(0xFF8D8E98));
+const kTextStyleFields = TextStyle(fontSize: 17.0, color: Colors.black45);
 
 const kHintStyleFields = TextStyle(color: Colors.grey, fontSize: 14.0);
 

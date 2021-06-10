@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/layouts/translatedLayout.dart';
-
-import 'package:greek_to_3/layouts/outputLayout.dart';
+import 'package:greekfix/layouts/translatedLayout.dart';
+import 'package:greekfix/layouts/outputLayout.dart';
+import 'package:greekfix/utils/buttons.dart';
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({
@@ -20,17 +20,15 @@ class SecondScreen extends StatelessWidget {
       builder: (context) {
         if (orientation.index == Orientation.landscape.index)
           return Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 30),
             child: Row(
-              children: layoutSecondScreen(
-                boxSide,
-              ),
+              children: layoutSecondScreenLandscape(boxSide, orientation),
             ),
           );
         else {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: layoutSecondScreen(boxSide),
+            children: layoutSecondScreenPortrait(boxSide, orientation),
           );
         }
       },
@@ -38,10 +36,80 @@ class SecondScreen extends StatelessWidget {
   }
 }
 
-List<Widget> layoutSecondScreen(boxSide) {
+List<Widget> layoutSecondScreenPortrait(boxSide, orientation) {
   return [
-    OutputLayout(boxSide),
-    SizedBox(height: 50.0, width: 60.0),
-    TranslatedLayout(boxSide),
+    SizedBox(height: 40),
+    Expanded(
+      flex: 6,
+      child: OutputLayout(boxSide, orientation),
+    ),
+    Expanded(
+      flex: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ButtonCopy(),
+            SizedBox(
+              width: 20,
+            ),
+            ButtonTranslate(),
+          ],
+        ),
+      ),
+    ),
+    Expanded(flex: 6, child: TranslatedLayout(boxSide, orientation)),
+    Expanded(
+      flex: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ButtonRefresh(),
+          ],
+        ),
+      ),
+    ),
+    SizedBox(height: 20),
+  ];
+}
+
+List<Widget> layoutSecondScreenLandscape(boxSide, orientation) {
+  return [
+    //SizedBox(width: 10),
+    SizedBox(width: 17),
+    Expanded(
+      flex: 6,
+      child: OutputLayout(boxSide, orientation),
+    ),
+    Expanded(
+      flex: 2,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonCopy(),
+          SizedBox(
+            height: 40,
+          ),
+          ButtonTranslate(),
+        ],
+      ),
+    ),
+    Expanded(
+      flex: 6,
+      child: TranslatedLayout(boxSide, orientation),
+    ),
+    Expanded(
+      flex: 2,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonRefresh(),
+        ],
+      ),
+    ),
+    SizedBox(width: 10),
   ];
 }

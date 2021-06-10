@@ -1,9 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:clipboard/clipboard.dart';
-import 'package:greek_to_3/utils/constants.dart';
-import 'package:greek_to_3/logic/changeNotifier.dart';
-import 'package:provider/provider.dart';
+import 'package:greekfix/utils/constants.dart';
 
 class TextFieldOutput extends StatelessWidget {
   final TextEditingController controllerTwo;
@@ -12,19 +8,17 @@ class TextFieldOutput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      autofocus: false,
       style: kTextStyleFields,
       controller: controllerTwo,
+      // onChanged: (pastedText) {
+      //   Provider.of<Data>(context, listen: false).passingPastedText(pastedText);
+      // },
       minLines: 17,
       maxLines: 17,
-      onChanged: null,
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: Icon(Icons.content_copy),
-          onPressed:
-              Provider.of<Data>(context, listen: false).clipboardCopyText,
-        ),
-        filled: true,
-        fillColor: Colors.grey[800],
+        filled: false,
+        fillColor: const Color(0XFFD4D7D9),
         hintStyle: kHintStyleFields,
         border: kTextFieldBorder,
       ),

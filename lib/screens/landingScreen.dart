@@ -1,28 +1,118 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:greek_to_3/screens/firstScreen.dart';
-import 'package:greek_to_3/screens/secondScreen.dart';
-import 'package:greek_to_3/logic/changeNotifier.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:provider/provider.dart';
+import 'package:greekfix/logic/changeNotifier.dart';
+import 'package:greekfix/layouts/screensLayout.dart';
 
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var controllerPage = Provider.of<Data>(context).controllerPage;
-    Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double boxSide = size.shortestSide - 80;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0XFFD4D7D9),
       body: SafeArea(
-        child: PageView(
-          controller: controllerPage,
-          scrollDirection: Axis.vertical,
+        bottom: false,
+        left: false,
+        right: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            FirstScreen(orientation: orientation, boxSide: boxSide),
-            SecondScreen(orientation: orientation, boxSide: boxSide),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                child: Image.asset('assets/Images/greekFixTitle.png'),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Correct and translate your greek text messages',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 17,
+                      letterSpacing: 2.5,
+                      height: 1.5,
+                      color: Color(0XFF617073),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 35.0),
+                child: Image.asset(
+                  'assets/Images/iconImage.png',
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    Provider.of<Data>(context, listen: false).pressGetStarted();
+                    // Duration afterButtonPressed = Duration(seconds: 2);
+                    // sleep(afterButtonPressed);
+                    //Navigator.pushNamed(context, '/first');
+                    //Navigator.of(context).push(_createRoute());
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation) {
+                          return ScreensLayout();
+                        },
+                        transitionDuration: Duration(milliseconds: 1000),
+                        transitionsBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                            Widget child) {
+                          return Align(
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: ClayContainer(
+                    color: Color(0XFFD4D7D9),
+                    borderRadius: 50,
+                    height: 67,
+                    width: 260,
+                    depth: 60,
+                    spread: 8,
+                    emboss: Provider.of<Data>(context).getStartedButtonOn,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'GET STARTED',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.7),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

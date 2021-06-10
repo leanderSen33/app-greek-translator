@@ -1,35 +1,33 @@
-import 'package:flutter/foundation.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:greek_to_3/utils/constants.dart';
-import 'package:greek_to_3/utils/buttons.dart';
-import 'package:greek_to_3/utils/textFieldOutput.dart';
+import 'package:greekfix/utils/textFieldOutput.dart';
 import 'package:provider/provider.dart';
-import 'package:greek_to_3/logic/changeNotifier.dart';
+import 'package:greekfix/logic/changeNotifier.dart';
+import 'package:greekfix/utils/boxSideConfig.dart';
 
 class OutputLayout extends StatelessWidget {
   final double boxSide;
-  OutputLayout(this.boxSide);
+
+  final Orientation orientation;
+  OutputLayout(this.boxSide, this.orientation);
+
+  final BoxSideConfig boxSideConfig = BoxSideConfig();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      overflow: Overflow.visible,
-      alignment: Alignment.bottomCenter,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20.0),
-          decoration: kFieldDecoration2,
-          width: boxSide,
-          height: boxSide,
-          alignment: Alignment.center,
-          child: TextFieldOutput(
-              Provider.of<Data>(context, listen: false).controllerText2),
-        ),
-        Positioned(
-          bottom: -27,
-          child: ButtonTranslate(),
-        ),
-      ],
+    return ClayContainer(
+      color: Color(0XFFD4D7D9),
+      width: boxSideConfig.boxSideWidthLogic(orientation, boxSide),
+      height: boxSideConfig.boxSideHeightLogic(orientation, boxSide),
+      borderRadius: 30,
+      depth: 40,
+      spread: 5,
+      emboss: false,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: TextFieldOutput(
+            Provider.of<Data>(context, listen: false).controllerText2),
+      ),
     );
   }
 }
