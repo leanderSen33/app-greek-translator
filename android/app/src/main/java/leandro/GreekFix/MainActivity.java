@@ -1,4 +1,4 @@
-package leandro.greek_fix;
+package leandro.GreekFix;
 
 import io.flutter.embedding.android.FlutterActivity;
 
