@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="leandro.greek_fix">
-   <application
-        android:label="greek_fix"
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="GreekFix"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
