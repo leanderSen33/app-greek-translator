@@ -6,6 +6,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:provider/provider.dart';
 import 'package:greekfix/logic/changeNotifier.dart';
 import 'package:greekfix/layouts/screensLayout.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LandingScreen extends StatelessWidget {
   @override
@@ -33,14 +34,24 @@ class LandingScreen extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Correct and translate your greek text messages',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 17,
-                      letterSpacing: 2.5,
-                      height: 1.5,
-                      color: Color(0XFF617073),
+                  child: SizedBox(
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 17,
+                        letterSpacing: 2.5,
+                        height: 1.5,
+                        color: Color(0XFF617073),
+                      ),
+                      child: AnimatedTextKit(
+                        isRepeatingAnimation: false,
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                              'Correct and translate your greek text messages',
+                              speed: Duration(milliseconds: 70),
+                              cursor: '_',
+                              textAlign: TextAlign.center)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -63,10 +74,6 @@ class LandingScreen extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     Provider.of<Data>(context, listen: false).pressGetStarted();
-                    // Duration afterButtonPressed = Duration(seconds: 2);
-                    // sleep(afterButtonPressed);
-                    //Navigator.pushNamed(context, '/first');
-                    //Navigator.of(context).push(_createRoute());
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (BuildContext context,

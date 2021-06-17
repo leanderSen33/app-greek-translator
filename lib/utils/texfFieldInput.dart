@@ -19,7 +19,7 @@ class TextFieldInput extends StatelessWidget {
       decoration: InputDecoration(
         filled: false,
         fillColor: const Color(0XFFD4D7D9),
-        hintText: 'Paste here your text message',
+        hintText: 'Press the paste button',
         hintStyle: kHintStyleFields,
         border: kTextFieldBorder,
       ),
