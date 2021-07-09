@@ -32,11 +32,19 @@ class ButtonVisualizeColors extends StatelessWidget {
 }
 
 class ButtonPaste extends StatelessWidget {
+  final AnimationController animationStuff;
+  ButtonPaste(this.animationStuff);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Provider.of<Data>(context, listen: false).clipboardPasteText();
+        if (animationStuff.isCompleted) {
+          animationStuff.reverse();
+        } else {
+          animationStuff.forward();
+        }
       },
       child: ClayContainer(
         color: Color(0XFFD4D7D9),

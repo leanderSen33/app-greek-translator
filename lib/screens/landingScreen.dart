@@ -47,8 +47,7 @@ class LandingScreen extends StatelessWidget {
                         animatedTexts: [
                           TypewriterAnimatedText(
                               'Correct and translate your greek text messages',
-                              speed: Duration(milliseconds: 70),
-                              cursor: '_',
+                              speed: Duration(milliseconds: 50),
                               textAlign: TextAlign.center)
                         ],
                       ),

@@ -17,7 +17,7 @@ class Data with ChangeNotifier {
   bool getStartedButtonOn = false;
 
   bool pasteButtonOn = false;
-  String pasteIconStatus = 'pasteOff';
+  String pasteIconStatus = 'pasteIcon';
 
   bool visualizeButtonOn = false;
   String visualizeIconStatus = 'eyeOff';
@@ -54,8 +54,9 @@ class Data with ChangeNotifier {
     controllerText1.text = value;
     pasteButtonOn = !pasteButtonOn;
     pasteButtonOn
-        ? pasteIconStatus = 'pasteIcon'
-        : pasteIconStatus = 'pasteOff';
+        ? pasteIconStatus = 'pasteOff'
+        : pasteIconStatus = 'pasteIcon';
+
     notifyListeners();
   }
 
@@ -182,7 +183,7 @@ class Data with ChangeNotifier {
         : returnIconStatus = 'returnOff';
 
     pasteButtonOn = false;
-    pasteIconStatus = 'pasteOff';
+    pasteIconStatus = 'pasteIcon';
     visualizeButtonOn = false;
     visualizeIconStatus = 'eyeOff';
     deleteButtonOn = false;

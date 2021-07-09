@@ -4,8 +4,10 @@ import 'package:flutter/rendering.dart';
 import 'package:greekfix/layouts/inputLayout.dart';
 import 'package:greekfix/layouts/colorLayout.dart';
 import 'package:greekfix/utils/buttons.dart';
+import 'package:greekfix/logic/changeNotifier.dart';
+import 'package:provider/provider.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   const FirstScreen({
     required this.orientation,
     required this.boxSide,
@@ -15,20 +17,52 @@ class FirstScreen extends StatelessWidget {
   final double boxSide;
 
   @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen>
+    with SingleTickerProviderStateMixin {
+  double getRadiansFromDegree(double degree) {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+  }
+
+  late Animation degOneTranslationAnimation;
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 170));
+    degOneTranslationAnimation =
+        Tween(begin: 0.0, end: 1.0).animate(animationController);
+    super.initState();
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        if (orientation.index == Orientation.landscape.index)
+        if (widget.orientation.index == Orientation.landscape.index)
           return Padding(
             padding: const EdgeInsets.only(left: 30),
             child: Row(
-              children: layoutFirstScreenLandscape(boxSide, orientation),
+              children: layoutFirstScreenLandscape(
+                  widget.boxSide, widget.orientation),
             ),
           );
         else {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: layoutFirstScreenPortrait(boxSide, orientation),
+            children: layoutFirstScreenPortrait(
+                boxSide: widget.boxSide,
+                orientation: widget.orientation,
+                degAnimation: degOneTranslationAnimation,
+                getRadiansFromDegree: getRadiansFromDegree,
+                animationStuff: animationController),
           );
         }
       },
@@ -36,7 +70,12 @@ class FirstScreen extends StatelessWidget {
   }
 }
 
-List<Widget> layoutFirstScreenPortrait(boxSide, orientation) {
+List<Widget> layoutFirstScreenPortrait(
+    {boxSide,
+    orientation,
+    degAnimation,
+    getRadiansFromDegree,
+    animationStuff}) {
   return [
     Expanded(
       child: SizedBox(height: 40),
@@ -49,25 +88,36 @@ List<Widget> layoutFirstScreenPortrait(boxSide, orientation) {
       flex: 2,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            ButtonPaste(),
-            SizedBox(
-              width: 20,
+            // IgnorePointer is the solution for the non responding buttons.
+            IgnorePointer(
+              child: Container(
+                color: Colors.transparent,
+                height: 150.0,
+                width: 200.0,
+              ),
             ),
-            ButtonVisualizeColors(),
-            SizedBox(
-              width: 20,
+            Transform.translate(
+              offset: Offset.fromDirection(
+                  getRadiansFromDegree(180.0), degAnimation.value * 80),
+              child: ButtonVisualizeColors(),
             ),
-            ButtonDelete(),
+            Transform.translate(
+              offset: Offset.fromDirection(
+                  getRadiansFromDegree(0.0), degAnimation.value * 80),
+              child: ButtonDelete(),
+            ),
+            ButtonPaste(animationStuff),
           ],
         ),
       ),
     ),
-
-    //SizedBox(height: 10.0, width: 20.0),
-    Expanded(flex: 6, child: ColorLayout(boxSide, orientation)),
+    Expanded(
+      flex: 6,
+      child: ColorLayout(boxSide, orientation),
+    ),
     Expanded(
       flex: 2,
       child: Padding(
@@ -101,7 +151,7 @@ List<Widget> layoutFirstScreenLandscape(boxSide, orientation) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ButtonPaste(),
+          //ButtonPaste(),
           SizedBox(
             height: 40,
           ),
@@ -131,9 +181,5 @@ List<Widget> layoutFirstScreenLandscape(boxSide, orientation) {
       ),
     ),
     SizedBox(width: 10),
-    // Expanded(
-    //   child: SvgPicture.asset('assets/images/delete.svg',
-    //       semanticsLabel: 'rectangle11stroke'),
-    // ),
   ];
 }
