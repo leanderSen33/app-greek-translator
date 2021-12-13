@@ -4,8 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:greekfix/layouts/inputLayout.dart';
 import 'package:greekfix/layouts/colorLayout.dart';
 import 'package:greekfix/utils/buttons.dart';
-import 'package:greekfix/logic/changeNotifier.dart';
-import 'package:provider/provider.dart';
+
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({
